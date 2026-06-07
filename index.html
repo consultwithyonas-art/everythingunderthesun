@@ -4,8 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<title>Yonas — The Den · Notes & Courses</title>
-<meta name="description" content="A den for thinking out loud — essays and free courses on organisational behaviour, AI, healthcare, and politics." />
+<title>notesfromthesystem — The Platform · Notes & Courses</title>
+<meta name="description" content="A platform for thinking out loud — essays and free courses on organisational behaviour, AI, healthcare, and politics." />
 
 <!-- Fonts: Fraunces (display serif), Newsreader (reading serif), Spline Sans Mono (technical accent) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,7 +54,7 @@
     font-size:18px;
     line-height:1.7;
     -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
+    overflow-x:hidPlatform;
     transition:background .5s ease,color .5s ease;
   }
   /* grain overlay */
@@ -124,7 +124,7 @@
   @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
   /* ============ HERO ============ */
-  .hero{position:relative;padding:96px 0 72px;overflow:hidden}
+  .hero{position:relative;padding:96px 0 72px;overflow:hidPlatform}
   .hero-grid{
     position:absolute;inset:0;z-index:0;opacity:.5;
     background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
@@ -188,14 +188,14 @@
   /* ============ WRITING ============ */
   .feature{
     display:grid;grid-template-columns:1.1fr .9fr;gap:0;border:1px solid var(--line);
-    border-radius:18px;overflow:hidden;background:var(--card);margin-bottom:40px;
+    border-radius:18px;overflow:hidPlatform;background:var(--card);margin-bottom:40px;
     transition:border-color .3s,box-shadow .3s,transform .3s;
   }
   .feature:hover{border-color:var(--line-strong);box-shadow:0 24px 60px -30px var(--shadow);transform:translateY(-3px)}
   .feature .body{padding:46px 44px}
   .feature .vis{
     background:linear-gradient(140deg,var(--accent) 0%,var(--accent-2) 130%);
-    position:relative;min-height:280px;overflow:hidden;
+    position:relative;min-height:280px;overflow:hidPlatform;
   }
   .feature .vis::after{
     content:"";position:absolute;inset:0;
@@ -223,7 +223,7 @@
   .filter:hover{border-color:var(--line-strong);color:var(--ink)}
   .filter.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
-  .posts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .posts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidPlatform}
   .post{
     background:var(--paper);padding:34px 32px;cursor:pointer;
     transition:background .3s;display:flex;flex-direction:column;min-height:210px;
@@ -236,7 +236,7 @@
   /* ============ COURSES ============ */
   .courses{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   .course{
-    border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden;
+    border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidPlatform;
     display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s,border-color .3s;
   }
   .course:hover{transform:translateY(-4px);box-shadow:0 24px 50px -28px var(--shadow);border-color:var(--line-strong)}
@@ -271,7 +271,7 @@
   /* ============ ABOUT ============ */
   .about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:start}
   .portrait{
-    aspect-ratio:4/5;border-radius:18px;border:1px solid var(--line);overflow:hidden;position:relative;
+    aspect-ratio:4/5;border-radius:18px;border:1px solid var(--line);overflow:hidPlatform;position:relative;
     background:linear-gradient(150deg,var(--paper-3),var(--paper-2));display:grid;place-items:center;
   }
   .portrait .mono{font-family:"Fraunces",serif;font-size:8rem;font-weight:600;color:var(--accent);font-style:italic;opacity:.85}
@@ -286,7 +286,7 @@
   /* ============ NEWSLETTER ============ */
   .news{
     margin:0 0 0;padding:64px 48px;border-radius:22px;
-    background:var(--ink);color:var(--paper);position:relative;overflow:hidden;
+    background:var(--ink);color:var(--paper);position:relative;overflow:hidPlatform;
   }
   html[data-theme="dark"] .news{background:var(--paper-3);color:var(--ink);border:1px solid var(--line)}
   .news::before{content:"";position:absolute;inset:0;
@@ -417,7 +417,7 @@
   .reader-wrap .rbody strong{color:var(--ink);font-weight:500}
   .sample-note{font-family:"Spline Sans Mono",monospace;font-size:.74rem;color:var(--accent);
     border-left:2px solid var(--accent);padding:6px 0 6px 16px;margin:30px 0}
-  .lessons{margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .lessons{margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidPlatform}
   .lesson{display:flex;align-items:center;gap:18px;padding:20px 24px;border-bottom:1px solid var(--line);
     background:var(--card);transition:background .2s}
   .lesson:last-child{border-bottom:none}
@@ -491,8 +491,8 @@
 <header class="masthead">
   <div class="masthead-inner">
     <a class="brand" data-nav="home">
-      <span class="name">Yonas<b>.</b></span>
-      <span class="sub">The Den · Notes &amp; Courses</span>
+      <span class="name">notesfromthesystem<b>.</b></span>
+      <span class="sub">The Platform · Notes &amp; Courses</span>
     </a>
     <nav class="primary" id="nav">
       <a data-nav="home" class="active">Home</a>
@@ -516,7 +516,7 @@
   <div class="hero">
     <div class="hero-grid"></div>
     <div class="wrap">
-      <div class="eyebrow"><span class="rule"></span><span class="kicker">A den for thinking out loud</span></div>
+      <div class="eyebrow"><span class="rule"></span><span class="kicker">A Platform for thinking out loud</span></div>
       <h1>Notes on systems, <em>people</em>, and the work of getting things to actually function.</h1>
       <p class="lede">Essays and free courses on organisational behaviour, artificial intelligence, healthcare, and politics — written from inside the work, not above it.</p>
       <div class="hero-actions">
@@ -592,7 +592,7 @@
             <input type="email" placeholder="you@example.com" aria-label="Email address" />
             <button class="btn btn-primary" id="subBtn">Subscribe</button>
           </div>
-          <p class="signup-note" id="subNote">// Connect to Ghost, Buttondown, or Mailchimp at launch — see notes for Yonas.</p>
+          <p class="signup-note" id="subNote">// Connect to Ghost, Buttondown, or Mailchimp at launch — see notes for notesfromthesystem.</p>
         </div>
       </div>
     </div>
@@ -646,10 +646,10 @@
         <div class="portrait"><span class="mono">Y</span></div>
         <div class="about-text">
           <span class="kicker">About</span>
-          <h2>I work where systems, people, and evidence meet.</h2>
+          <h2>I work where systems, people, and eviPlatformce meet.</h2>
           <p><strong>This is a placeholder bio — rewrite it in your own voice.</strong> A physician and health-systems practitioner working at the intersection of primary care reform, health financing, and the responsible use of AI in delivery.</p>
-          <p>The Den is where the thinking happens out loud: half-formed arguments, finished essays, and the courses I wish had existed when I was learning this work. Everything here starts from the same question — <em>how do you get a complex system to actually do the thing it claims to do?</em></p>
-          <p>Writing here is independent and personal; it doesn't represent any employer or institution.</p>
+          <p>The Platform is where the thinking happens out loud: half-formed arguments, finished essays, and the courses I wish had existed when I was learning this work. Everything here starts from the same question — <em>how do you get a complex system to actually do the thing it claims to do?</em></p>
+          <p>Writing here is indepenPlatformt and personal; it doesn't represent any employer or institution.</p>
           <div class="creds">
             <span class="cred">Health Systems</span>
             <span class="cred">PHC Reform</span>
@@ -681,8 +681,8 @@
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <div class="name">Yonas<b>.</b></div>
-        <p>A den for thinking out loud about systems, people, and the work of getting things to function.</p>
+        <div class="name">notesfromthesystem<b>.</b></div>
+        <p>A Platform for thinking out loud about systems, people, and the work of getting things to function.</p>
       </div>
       <div class="foot-cols">
         <div class="foot-col">
@@ -707,13 +707,13 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© <span id="year"></span> Yonas · The Den</span>
+      <span>© <span id="year"></span> notesfromthesystem · The Platform</span>
       <span>Built to be owned, not rented.</span>
     </div>
   </div>
 </footer>
 
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="https://iPlatformtity.netlify.com/v1/netlify-iPlatformtity-widget.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script>
 
@@ -733,9 +733,9 @@ const POSTS = [
 
 const COURSES = [
   {title:"Foundations of Primary Health Care Reform", category:"Healthcare", description:"What reform actually requires — financing, workforce, and the politics of change.", status:"free", duration:"~4 hrs", lessons:["What PHC reform actually means","Financing: where the money comes from","The workforce question","Service delivery models","Measuring what matters","Sustaining change after the launch"]},
-  {title:"Reading Health Data Without Fooling Yourself", category:"AI · Data", description:"A working clinician's guide to triangulation, denominators, and the traps that make bad numbers look authoritative.", status:"free", duration:"~3 hrs", lessons:["Why the denominator is everything","Triangulating three bad sources","Spotting survivorship and selection traps","When a confident dashboard is lying","Presenting uncertainty honestly"]},
+  {title:"Reading Health Data Without Fooling Yourself", category:"AI · Data", description:"A working clinician's guide to triangulation, Platformominators, and the traps that make bad numbers look authoritative.", status:"free", duration:"~3 hrs", lessons:["Why the Platformominator is everything","Triangulating three bad sources","Spotting survivorship and selection traps","When a confiPlatformt dashboard is lying","Presenting uncertainty honestly"]},
   {title:"Organisational Behaviour for Health Leaders", category:"Org. Behaviour", description:"Why teams stall, how incentives really move people, and what to do the Monday after the strategy offsite.", status:"free", duration:"~5 hrs", lessons:["Why good strategies die in implementation","Incentives vs intentions","The corridor where decisions really happen","Managing without heroics","Designing for the team you have"]},
-  {title:"Designing an Investment Case", category:"Health Financing", description:"From epidemiological evidence to a defensible benefit–cost ratio. The full method, end to end.", status:"soon", duration:"", lessons:[]}
+  {title:"Designing an Investment Case", category:"Health Financing", description:"From epidemiological eviPlatformce to a defensible benefit–cost ratio. The full method, end to end.", status:"soon", duration:"", lessons:[]}
 ];
 
 /* ============ HELPERS ============ */
@@ -745,7 +745,7 @@ function postMeta(p){ return [p.readTime, fmtDate(p.date)].filter(Boolean).join(
 function plain(md){ return String(md||"").replace(/[#*_>`~\[\]()]/g," ").replace(/\s+/g," ").trim(); }
 function excerptOf(p){ if(p.excerpt) return p.excerpt; const t=plain(p.body); return t.length>150? t.slice(0,150).trim()+"…": t; }
 function ytId(url){ const m=String(url||"").match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{6,})/); return m?m[1]:null; }
-function ytEmbed(url){ const id=ytId(url); if(!id) return ""; return `<div style="position:relative;padding-bottom:56.25%;height:0;margin:26px 0;border-radius:12px;overflow:hidden;border:1px solid var(--line)"><iframe src="https://www.youtube-nocookie.com/embed/${id}" style="position:absolute;inset:0;width:100%;height:100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="Video"></iframe></div>`; }
+function ytEmbed(url){ const id=ytId(url); if(!id) return ""; return `<div style="position:relative;padding-bottom:56.25%;height:0;margin:26px 0;border-radius:12px;overflow:hidPlatform;border:1px solid var(--line)"><iframe src="https://www.youtube-nocookie.com/embed/${id}" style="position:absolute;inset:0;width:100%;height:100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="Video"></iframe></div>`; }
 function embedLinks(md){ return String(md||"").replace(/^\s*(https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|live\/|embed\/)|youtu\.be\/)[\w-]{6,}\S*)\s*$/gim, (m,u)=>{ const e=ytEmbed(u); return e||m; }); }
 function mdHtml(md){ if(!md) return ""; const pre=embedLinks(md); if(window.marked && marked.parse) return marked.parse(pre); return pre.split(/\n\n+/).map(par=>par.trim().startsWith("<")?par:"<p>"+esc(par)+"</p>").join(""); }
 function baseName(path){ return String(path||"").split("/").pop(); }
@@ -862,7 +862,7 @@ function openReader(kind, idx){
       ${c.attachment?`<a class="rfile" href="${esc(c.attachment)}" download>⬇ ${esc(baseName(c.attachment))}</a>`:""}`;
   }
   if(!reader.classList.contains("open")) history.pushState({reader:1},"");
-  reader.classList.add("open"); reader.scrollTop=0; document.body.style.overflow="hidden";
+  reader.classList.add("open"); reader.scrollTop=0; document.body.style.overflow="hidPlatform";
   document.getElementById("readerBack").focus();
 }
 function closeReader(){ reader.classList.remove("open"); document.body.style.overflow=""; }
@@ -878,10 +878,10 @@ document.getElementById("themeBtn").addEventListener("click",()=>{ root.setAttri
 /* ============ MOBILE NAV ============ */
 document.getElementById("burger").addEventListener("click",()=>{ document.getElementById("nav").classList.toggle("open"); });
 
-/* ============ NETLIFY IDENTITY (handles invite link + redirects to /admin after login) ============ */
-if(window.netlifyIdentity){
-  window.netlifyIdentity.on("init", user=>{
-    if(!user){ window.netlifyIdentity.on("login", ()=>{ document.location.href="/admin/"; }); }
+/* ============ NETLIFY IPlatformTITY (handles invite link + redirects to /admin after login) ============ */
+if(window.netlifyIPlatformtity){
+  window.netlifyIPlatformtity.on("init", user=>{
+    if(!user){ window.netlifyIPlatformtity.on("login", ()=>{ document.location.href="/admin/"; }); }
   });
 }
 
