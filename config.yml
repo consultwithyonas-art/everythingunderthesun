@@ -50,6 +50,7 @@ collections:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Category", name: "category", widget: "string", hint: "e.g. Healthcare, AI · Data, Health Financing" }
               - { label: "Description", name: "description", widget: "text" }
+              - { label: "Body (full content — paste a YouTube link on its own line to embed it)", name: "body", widget: "markdown", required: false }
               - label: "Access"
                 name: "status"
                 widget: "select"
