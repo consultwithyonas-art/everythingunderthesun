@@ -1,0 +1,65 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "uploads"
+public_folder: "/uploads"
+
+site_url: https://everythingunderthesun.netlify.app
+display_url: https://everythingunderthesun.netlify.app
+
+collections:
+  - name: "content"
+    label: "Site content"
+    delete: false
+    files:
+      - name: "main"
+        label: "Essays & Courses"
+        file: "content.json"
+        description: "Add, edit, reorder, or delete essays and courses. Click Publish to push them live."
+        fields:
+          - label: "Essays"
+            name: "posts"
+            label_singular: "Essay"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - label: "Category"
+                name: "category"
+                widget: "select"
+                options:
+                  - { label: "Organisational Behaviour", value: "organisational" }
+                  - { label: "AI", value: "ai" }
+                  - { label: "Healthcare", value: "healthcare" }
+                  - { label: "Politics", value: "politics" }
+              - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
+              - { label: "Body", name: "body", widget: "markdown", required: false }
+              - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - { label: "Read time", name: "readTime", widget: "string", required: false }
+              - { label: "Cover image", name: "cover", widget: "image", required: false }
+              - { label: "Attachment", name: "attachment", widget: "file", required: false }
+          - label: "Courses"
+            name: "courses"
+            label_singular: "Course"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Category", name: "category", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - label: "Access"
+                name: "status"
+                widget: "select"
+                default: "free"
+                options:
+                  - { label: "Free", value: "free" }
+                  - { label: "Premium (coming soon)", value: "soon" }
+              - { label: "Duration", name: "duration", widget: "string", required: false }
+              - label: "Lessons"
+                name: "lessons"
+                widget: "list"
+                required: false
+                field: { label: "Lesson title", name: "lesson", widget: "string" }
+              - { label: "Cover image", name: "cover", widget: "image", required: false }
+              - { label: "Attachment", name: "attachment", widget: "file", required: false }
