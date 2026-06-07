@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<title>Yonas — The Den · Notes & Courses</title>
+<meta name="description" content="A den for thinking out loud — essays and free courses on organisational behaviour, AI, healthcare, and politics." />
+
+<!-- Fonts: Fraunces (display serif), Newsreader (reading serif), Spline Sans Mono (technical accent) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ THEME TOKENS ============ */
+  :root{
+    --paper:#F6F2E9;
+    --paper-2:#EFE8D9;
+    --paper-3:#E7DECB;
+    --ink:#1C1714;
+    --ink-soft:#4A433B;
+    --muted:#8C8273;
+    --line:rgba(28,23,20,.14);
+    --line-strong:rgba(28,23,20,.30);
+    --accent:#B14122;       /* burnt clay */
+    --accent-2:#2E4A45;     /* deep pine */
+    --card:#FBF8F1;
+    --shadow:rgba(28,23,20,.10);
+    --grain:.035;
+  }
+  html[data-theme="dark"]{
+    --paper:#14110D;
+    --paper-2:#1B1712;
+    --paper-3:#231D16;
+    --ink:#F0E9DC;
+    --ink-soft:#C7BDAC;
+    --muted:#8C8273;
+    --line:rgba(240,233,220,.14);
+    --line-strong:rgba(240,233,220,.30);
+    --accent:#E07A47;
+    --accent-2:#7BB0A3;
+    --card:#1B1712;
+    --shadow:rgba(0,0,0,.5);
+    --grain:.05;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    transition:background .5s ease,color .5s ease;
+  }
+  /* grain overlay */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;
+    opacity:var(--grain);mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  html[data-theme="dark"] body::before{mix-blend-mode:screen}
+
+  ::selection{background:var(--accent);color:var(--paper)}
+  a{color:inherit;text-decoration:none}
+
+  .kicker{
+    font-family:"Spline Sans Mono",monospace;
+    font-size:.72rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--accent);
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+  /* ============ MASTHEAD ============ */
+  header.masthead{
+    position:sticky;top:0;z-index:100;
+    background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(14px) saturate(1.2);
+    border-bottom:1px solid var(--line);
+  }
+  .masthead-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    padding:18px 32px;max-width:1180px;margin:0 auto;
+  }
+  .brand{display:flex;flex-direction:column;line-height:1}
+  .brand .name{
+    font-family:"Fraunces",serif;font-weight:600;font-size:1.55rem;
+    letter-spacing:-.02em;font-optical-sizing:auto;
+  }
+  .brand .name b{color:var(--accent);font-weight:600}
+  .brand .sub{
+    font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--muted);margin-top:5px;
+  }
+  nav.primary{display:flex;align-items:center;gap:4px}
+  nav.primary a{
+    font-family:"Spline Sans Mono",monospace;font-size:.74rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft);
+    padding:9px 14px;border-radius:7px;position:relative;
+    transition:color .25s,background .25s;cursor:pointer;
+  }
+  nav.primary a:hover{color:var(--ink);background:var(--paper-2)}
+  nav.primary a.active{color:var(--accent)}
+  nav.primary a.active::after{
+    content:"";position:absolute;left:14px;right:14px;bottom:3px;height:1.5px;background:var(--accent);
+  }
+  .nav-tools{display:flex;align-items:center;gap:10px}
+  .icon-btn{
+    width:38px;height:38px;border:1px solid var(--line);border-radius:9px;
+    background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center;
+    transition:border-color .25s,transform .2s;
+  }
+  .icon-btn:hover{border-color:var(--line-strong);transform:translateY(-1px)}
+  .icon-btn svg{width:18px;height:18px}
+  .burger{display:none}
+
+  /* ============ VIEWS ============ */
+  .view{display:none;animation:fade .55s ease both}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* ============ HERO ============ */
+  .hero{position:relative;padding:96px 0 72px;overflow:hidden}
+  .hero-grid{
+    position:absolute;inset:0;z-index:0;opacity:.5;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 70% at 70% 20%,#000 0%,transparent 75%);
+            mask-image:radial-gradient(ellipse 80% 70% at 70% 20%,#000 0%,transparent 75%);
+  }
+  .hero .wrap{position:relative;z-index:1}
+  .hero .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+  .hero .eyebrow .rule{height:1px;width:54px;background:var(--accent)}
+  .hero h1{
+    font-family:"Fraunces",serif;font-weight:500;font-optical-sizing:auto;
+    font-size:clamp(2.7rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-.025em;
+    max-width:15ch;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .lede{
+    font-size:clamp(1.1rem,2vw,1.4rem);color:var(--ink-soft);max-width:54ch;
+    margin-top:30px;line-height:1.55;
+  }
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:42px}
+  .btn{
+    font-family:"Spline Sans Mono",monospace;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:15px 26px;border-radius:10px;cursor:pointer;border:1px solid transparent;
+    transition:transform .2s,box-shadow .25s,background .25s,color .25s,border-color .25s;
+    display:inline-flex;align-items:center;gap:9px;
+  }
+  .btn-primary{background:var(--accent);color:var(--paper)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px -10px var(--accent)}
+  .btn-ghost{border-color:var(--line-strong);color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+
+  .strands{display:flex;flex-wrap:wrap;gap:10px;margin-top:64px}
+  .strand{
+    font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.08em;
+    color:var(--ink-soft);border:1px solid var(--line);border-radius:50px;
+    padding:8px 16px;display:flex;align-items:center;gap:9px;
+    transition:border-color .25s,color .25s;cursor:pointer;
+  }
+  .strand:hover{border-color:var(--accent);color:var(--accent)}
+  .strand .dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .strand:nth-child(2) .dot{background:var(--accent-2)}
+  .strand:nth-child(3) .dot{background:#c98a2b}
+  .strand:nth-child(4) .dot{background:#8a5a9e}
+
+  /* ============ SECTION HEADS ============ */
+  .sec{padding:80px 0;border-top:1px solid var(--line)}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:46px;flex-wrap:wrap}
+  .sec-head h2{
+    font-family:"Fraunces",serif;font-weight:500;font-size:clamp(1.8rem,3.4vw,2.7rem);
+    letter-spacing:-.02em;line-height:1.05;
+  }
+  .sec-head p{color:var(--muted);max-width:42ch;font-size:1rem;margin-top:8px}
+  .link-more{
+    font-family:"Spline Sans Mono",monospace;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);display:inline-flex;gap:8px;align-items:center;cursor:pointer;white-space:nowrap;
+  }
+  .link-more:hover{gap:13px}
+  .link-more svg{width:15px;height:15px;transition:transform .25s}
+
+  /* ============ WRITING ============ */
+  .feature{
+    display:grid;grid-template-columns:1.1fr .9fr;gap:0;border:1px solid var(--line);
+    border-radius:18px;overflow:hidden;background:var(--card);margin-bottom:40px;
+    transition:border-color .3s,box-shadow .3s,transform .3s;
+  }
+  .feature:hover{border-color:var(--line-strong);box-shadow:0 24px 60px -30px var(--shadow);transform:translateY(-3px)}
+  .feature .body{padding:46px 44px}
+  .feature .vis{
+    background:linear-gradient(140deg,var(--accent) 0%,var(--accent-2) 130%);
+    position:relative;min-height:280px;overflow:hidden;
+  }
+  .feature .vis::after{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(circle at 30% 30%,rgba(255,255,255,.18),transparent 50%),
+                     repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 2px,transparent 2px 22px);
+  }
+  .feature .vis .fnum{
+    position:absolute;bottom:-12px;right:18px;font-family:"Fraunces",serif;
+    font-size:11rem;font-weight:600;color:rgba(255,255,255,.16);line-height:.8;font-style:italic;
+  }
+  .meta{display:flex;align-items:center;gap:14px;font-family:"Spline Sans Mono",monospace;
+    font-size:.7rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:18px;flex-wrap:wrap}
+  .tag{color:var(--accent)}
+  .feature h3{font-family:"Fraunces",serif;font-weight:500;font-size:2rem;line-height:1.12;letter-spacing:-.02em}
+  .feature .excerpt{color:var(--ink-soft);margin-top:18px;font-size:1.08rem}
+  .feature .read{margin-top:26px;font-family:"Spline Sans Mono",monospace;font-size:.74rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:inline-flex;gap:8px;align-items:center}
+
+  .filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:34px}
+  .filter{
+    font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:9px 16px;border:1px solid var(--line);border-radius:50px;cursor:pointer;color:var(--ink-soft);
+    background:transparent;transition:all .25s;
+  }
+  .filter:hover{border-color:var(--line-strong);color:var(--ink)}
+  .filter.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .posts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .post{
+    background:var(--paper);padding:34px 32px;cursor:pointer;
+    transition:background .3s;display:flex;flex-direction:column;min-height:210px;
+  }
+  .post:hover{background:var(--card)}
+  .post h4{font-family:"Fraunces",serif;font-weight:500;font-size:1.42rem;line-height:1.18;letter-spacing:-.015em;margin:14px 0 12px}
+  .post .excerpt{color:var(--ink-soft);font-size:.98rem;flex:1}
+  .post .foot{margin-top:18px;font-family:"Spline Sans Mono",monospace;font-size:.68rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+
+  /* ============ COURSES ============ */
+  .courses{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .course{
+    border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s,border-color .3s;
+  }
+  .course:hover{transform:translateY(-4px);box-shadow:0 24px 50px -28px var(--shadow);border-color:var(--line-strong)}
+  .course .top{height:120px;position:relative;display:flex;align-items:flex-end;padding:18px;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  .c1 .top{background:linear-gradient(135deg,#B14122,#8a2f17)}
+  .c2 .top{background:linear-gradient(135deg,#2E4A45,#1d322e)}
+  .c3 .top{background:linear-gradient(135deg,#5a4a7a,#3a2f54)}
+  .c4 .top{background:linear-gradient(135deg,#c98a2b,#9a6817)}
+  .course .top::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,transparent 1px 14px)}
+  .badge{
+    position:relative;z-index:1;font-family:"Spline Sans Mono",monospace;font-size:.64rem;letter-spacing:.14em;
+    text-transform:uppercase;padding:6px 12px;border-radius:50px;font-weight:600;
+  }
+  .badge.free{background:rgba(255,255,255,.92);color:#1C1714}
+  .badge.soon{background:rgba(0,0,0,.4);color:#fff;border:1px solid rgba(255,255,255,.4)}
+  .course .info{padding:26px 24px 28px;display:flex;flex-direction:column;flex:1}
+  .course .info .ctag{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .course h4{font-family:"Fraunces",serif;font-weight:500;font-size:1.32rem;line-height:1.2;letter-spacing:-.015em}
+  .course .desc{color:var(--ink-soft);font-size:.95rem;margin-top:12px;flex:1}
+  .course .cmeta{display:flex;gap:16px;margin-top:20px;font-family:"Spline Sans Mono",monospace;
+    font-size:.68rem;color:var(--muted);letter-spacing:.05em}
+  .course .cta{
+    margin-top:22px;width:100%;text-align:center;padding:13px;border-radius:10px;
+    font-family:"Spline Sans Mono",monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    border:1px solid var(--accent);color:var(--accent);background:transparent;transition:all .25s;
+  }
+  .course .cta:hover{background:var(--accent);color:var(--paper)}
+  .course .cta.locked{border-color:var(--line);color:var(--muted);cursor:not-allowed}
+  .course .cta.locked:hover{background:transparent;color:var(--muted)}
+
+  /* ============ ABOUT ============ */
+  .about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:start}
+  .portrait{
+    aspect-ratio:4/5;border-radius:18px;border:1px solid var(--line);overflow:hidden;position:relative;
+    background:linear-gradient(150deg,var(--paper-3),var(--paper-2));display:grid;place-items:center;
+  }
+  .portrait .mono{font-family:"Fraunces",serif;font-size:8rem;font-weight:600;color:var(--accent);font-style:italic;opacity:.85}
+  .about-text h2{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(1.9rem,3.6vw,2.9rem);
+    letter-spacing:-.02em;line-height:1.1;margin-bottom:24px}
+  .about-text p{color:var(--ink-soft);margin-bottom:20px;font-size:1.1rem}
+  .about-text p strong{color:var(--ink);font-weight:500}
+  .creds{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+  .cred{font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.06em;
+    border:1px solid var(--line);border-radius:8px;padding:9px 14px;color:var(--ink-soft)}
+
+  /* ============ NEWSLETTER ============ */
+  .news{
+    margin:0 0 0;padding:64px 48px;border-radius:22px;
+    background:var(--ink);color:var(--paper);position:relative;overflow:hidden;
+  }
+  html[data-theme="dark"] .news{background:var(--paper-3);color:var(--ink);border:1px solid var(--line)}
+  .news::before{content:"";position:absolute;inset:0;
+    background-image:radial-gradient(circle at 85% 15%,rgba(177,65,34,.5),transparent 45%);}
+  .news-inner{position:relative;z-index:1;max-width:560px}
+  .news .kicker{color:var(--accent)}
+  .news h2{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(1.8rem,3.4vw,2.6rem);
+    letter-spacing:-.02em;margin:16px 0 14px;line-height:1.08}
+  .news p{opacity:.82;margin-bottom:28px}
+  .signup{display:flex;gap:12px;flex-wrap:wrap}
+  .signup input{
+    flex:1;min-width:220px;background:transparent;border:1px solid rgba(255,255,255,.3);
+    border-radius:10px;padding:15px 18px;color:inherit;font-family:"Spline Sans Mono",monospace;font-size:.85rem;
+  }
+  html[data-theme="dark"] .signup input{border-color:var(--line-strong)}
+  .signup input::placeholder{color:rgba(255,255,255,.45)}
+  html[data-theme="dark"] .signup input::placeholder{color:var(--muted)}
+  .signup input:focus{outline:none;border-color:var(--accent)}
+  .signup button{white-space:nowrap}
+  .signup-note{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.06em;opacity:.6;margin-top:16px}
+
+  /* ============ FOOTER ============ */
+  footer{border-top:1px solid var(--line);padding:56px 0 40px;margin-top:80px}
+  .foot-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;align-items:flex-start}
+  .foot-brand .name{font-family:"Fraunces",serif;font-size:1.5rem;font-weight:600;letter-spacing:-.02em}
+  .foot-brand .name b{color:var(--accent)}
+  .foot-brand p{color:var(--muted);font-size:.92rem;margin-top:8px;max-width:34ch}
+  .foot-cols{display:flex;gap:64px;flex-wrap:wrap}
+  .foot-col h5{font-family:"Spline Sans Mono",monospace;font-size:.68rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .foot-col a{display:block;color:var(--ink-soft);font-size:.95rem;margin-bottom:11px;transition:color .2s;cursor:pointer}
+  .foot-col a:hover{color:var(--accent)}
+  .foot-bottom{margin-top:48px;padding-top:26px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    font-family:"Spline Sans Mono",monospace;font-size:.7rem;letter-spacing:.08em;color:var(--muted)}
+
+  /* ============ COMPOSE BAR + BUTTONS ============ */
+  .compose-bar{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-bottom:24px;flex-wrap:wrap}
+  .btn-add{
+    font-family:"Spline Sans Mono",monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:12px 20px;border-radius:10px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--paper);
+    display:inline-flex;align-items:center;gap:9px;transition:transform .2s,box-shadow .25s;
+  }
+  .btn-add:hover{transform:translateY(-2px);box-shadow:0 12px 28px -12px var(--accent)}
+  .btn-add svg{width:15px;height:15px}
+  .btn-out{
+    font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:12px 18px;border-radius:10px;cursor:pointer;border:1px solid var(--line-strong);background:transparent;color:var(--ink-soft);
+    transition:all .25s;
+  }
+  .btn-out:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* ============ MODAL COMPOSER ============ */
+  .modal{
+    position:fixed;inset:0;z-index:1000;display:none;align-items:flex-start;justify-content:center;
+    padding:40px 20px;overflow-y:auto;background:rgba(10,8,6,.55);backdrop-filter:blur(6px);
+  }
+  .modal.open{display:flex;animation:fade .3s ease both}
+  .modal-card{
+    background:var(--paper);border:1px solid var(--line-strong);border-radius:20px;width:100%;max-width:640px;
+    padding:40px 40px 34px;box-shadow:0 40px 100px -30px rgba(0,0,0,.6);position:relative;
+  }
+  .modal-card h3{font-family:"Fraunces",serif;font-weight:500;font-size:1.9rem;letter-spacing:-.02em;margin-bottom:6px}
+  .modal-card .sub{color:var(--muted);font-size:.95rem;margin-bottom:26px}
+  .modal-close{position:absolute;top:24px;right:24px;width:36px;height:36px;border:1px solid var(--line);
+    border-radius:9px;background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center}
+  .modal-close:hover{border-color:var(--line-strong)}
+  .seg{display:flex;gap:6px;background:var(--paper-2);border:1px solid var(--line);border-radius:11px;padding:5px;margin-bottom:24px}
+  .seg button{flex:1;font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:11px;border:none;border-radius:7px;background:transparent;color:var(--ink-soft);cursor:pointer;transition:all .2s}
+  .seg button.on{background:var(--ink);color:var(--paper)}
+  .field{margin-bottom:20px}
+  .field label{display:block;font-family:"Spline Sans Mono",monospace;font-size:.68rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+  .field input[type=text],.field textarea,.field select{
+    width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;
+    color:var(--ink);font-family:"Newsreader",serif;font-size:1rem;transition:border-color .2s;
+  }
+  .field textarea{min-height:150px;resize:vertical;line-height:1.6}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent)}
+  .field select{font-family:"Spline Sans Mono",monospace;font-size:.82rem;cursor:pointer}
+  .uploader{
+    border:1.5px dashed var(--line-strong);border-radius:12px;padding:22px;text-align:center;cursor:pointer;
+    transition:border-color .2s,background .2s;font-family:"Spline Sans Mono",monospace;font-size:.78rem;color:var(--muted);
+  }
+  .uploader:hover{border-color:var(--accent);color:var(--accent)}
+  .uploader.has{border-style:solid;border-color:var(--accent);color:var(--ink)}
+  .uploader input{display:none}
+  .cover-prev{width:100%;height:120px;object-fit:cover;border-radius:10px;margin-top:12px;display:none}
+  .modal-actions{display:flex;gap:12px;margin-top:30px;justify-content:flex-end;flex-wrap:wrap}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+  /* ============ TOAST ============ */
+  .toast{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(120px);
+    background:var(--ink);color:var(--paper);padding:15px 24px;border-radius:12px;z-index:1100;
+    font-family:"Spline Sans Mono",monospace;font-size:.78rem;letter-spacing:.04em;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.5);transition:transform .4s cubic-bezier(.2,.8,.2,1);max-width:90vw;
+  }
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  /* ============ READER (click-to-open) ============ */
+  .reader{
+    position:fixed;inset:0;z-index:1050;display:none;overflow-y:auto;
+    background:var(--paper);animation:fade .35s ease both;
+  }
+  .reader.open{display:block}
+  .reader-bar{
+    position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  }
+  .reader-bar .back{
+    font-family:"Spline Sans Mono",monospace;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);cursor:pointer;display:inline-flex;align-items:center;gap:9px;
+  }
+  .reader-bar .back:hover{color:var(--accent)}
+  .reader-bar .back svg{width:15px;height:15px}
+  .reader-wrap{max-width:720px;margin:0 auto;padding:60px 32px 110px}
+  .reader-wrap .kicker{margin-bottom:18px;display:inline-block}
+  .reader-wrap h1{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(2.1rem,4.6vw,3.4rem);
+    line-height:1.08;letter-spacing:-.025em;margin-bottom:22px}
+  .reader-wrap .rmeta{font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap}
+  .reader-wrap .rcover{width:100%;border-radius:14px;margin-bottom:38px;border:1px solid var(--line)}
+  .reader-wrap .rbody{font-size:1.18rem;line-height:1.78;color:var(--ink-soft)}
+  .reader-wrap .rbody p{margin-bottom:26px}
+  .reader-wrap .rbody strong{color:var(--ink);font-weight:500}
+  .sample-note{font-family:"Spline Sans Mono",monospace;font-size:.74rem;color:var(--accent);
+    border-left:2px solid var(--accent);padding:6px 0 6px 16px;margin:30px 0}
+  .lessons{margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .lesson{display:flex;align-items:center;gap:18px;padding:20px 24px;border-bottom:1px solid var(--line);
+    background:var(--card);transition:background .2s}
+  .lesson:last-child{border-bottom:none}
+  .lesson:hover{background:var(--paper-2)}
+  .lesson .ln{font-family:"Spline Sans Mono",monospace;font-size:.82rem;color:var(--accent);min-width:28px}
+  .lesson .lt{font-family:"Newsreader",serif;font-size:1.08rem}
+  .rfile{display:inline-flex;align-items:center;gap:10px;margin-top:30px;padding:14px 22px;border:1px solid var(--line-strong);
+    border-radius:10px;font-family:"Spline Sans Mono",monospace;font-size:.78rem;letter-spacing:.06em;color:var(--accent);cursor:pointer}
+  .rfile:hover{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+
+  /* ============ DELETE BUTTON (admin only) ============ */
+  .post,.course{position:relative}
+  .del-btn{
+    display:none;position:absolute;top:12px;right:12px;z-index:3;width:30px;height:30px;border-radius:8px;
+    border:1px solid var(--line-strong);background:var(--paper);color:var(--accent);cursor:pointer;
+    place-items:center;font-size:14px;line-height:1;transition:background .2s,color .2s;
+  }
+  .del-btn:hover{background:var(--accent);color:var(--paper)}
+  .course .del-btn{background:rgba(255,255,255,.92);color:#1C1714;border:none}
+
+  /* ============ ADMIN GATING ============ */
+  .compose-bar{display:none}
+  body.admin .compose-bar{display:flex}
+  body.admin .del-btn{display:grid}
+  .admin-banner{
+    display:none;background:var(--accent);color:var(--paper);text-align:center;
+    font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.08em;padding:9px 16px;
+  }
+  body.admin .admin-banner{display:block}
+  .admin-toggle{cursor:pointer;opacity:.6}
+  .admin-toggle:hover{opacity:1;color:var(--accent)}
+
+  /* ============ MOBILE ============ */
+  @media(max-width:880px){
+    body{font-size:17px}
+    .wrap{padding:0 22px}
+    .masthead-inner{padding:14px 22px}
+    nav.primary{
+      position:fixed;inset:64px 0 auto 0;flex-direction:column;align-items:stretch;
+      background:var(--paper);border-bottom:1px solid var(--line);padding:14px 22px;gap:2px;
+      transform:translateY(-130%);transition:transform .35s ease;z-index:90;
+    }
+    nav.primary.open{transform:none}
+    nav.primary a{padding:14px;font-size:.82rem}
+    nav.primary a.active::after{display:none}
+    .burger{display:grid}
+    .feature{grid-template-columns:1fr}
+    .feature .vis{min-height:160px;order:-1}
+    .feature .body{padding:34px 28px}
+    .posts{grid-template-columns:1fr}
+    .courses{grid-template-columns:1fr}
+    .about-grid{grid-template-columns:1fr;gap:36px}
+    .portrait{max-width:300px}
+    .news{padding:44px 28px}
+    .sec{padding:60px 0}
+    .hero{padding:64px 0 48px}
+    .modal-card{padding:30px 24px 28px}
+    .row2{grid-template-columns:1fr}
+    .compose-bar{justify-content:stretch}
+    .btn-add,.btn-out{flex:1;justify-content:center;text-align:center}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<noscript><div style="padding:18px 32px;background:#B14122;color:#F6F2E9;font-family:monospace;font-size:.85rem">This site needs JavaScript enabled to display essays and courses.</div></noscript>
+
+
+<!-- ============ MASTHEAD ============ -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" data-nav="home">
+      <span class="name">Yonas<b>.</b></span>
+      <span class="sub">The Den · Notes &amp; Courses</span>
+    </a>
+    <nav class="primary" id="nav">
+      <a data-nav="home" class="active">Home</a>
+      <a data-nav="writing">Writing</a>
+      <a data-nav="courses">Courses</a>
+      <a data-nav="about">About</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">
+        <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="icon-btn burger" id="burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HOME ============ -->
+<section class="view active" id="view-home">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="wrap">
+      <div class="eyebrow"><span class="rule"></span><span class="kicker">A den for thinking out loud</span></div>
+      <h1>Notes on systems, <em>people</em>, and the work of getting things to actually function.</h1>
+      <p class="lede">Essays and free courses on organisational behaviour, artificial intelligence, healthcare, and politics — written from inside the work, not above it.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-nav="writing">Read the writing
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="btn btn-ghost" data-nav="courses">Browse free courses</button>
+      </div>
+      <div class="strands">
+        <span class="strand" data-go="organisational"><span class="dot"></span>Organisational Behaviour</span>
+        <span class="strand" data-go="ai"><span class="dot"></span>Artificial Intelligence</span>
+        <span class="strand" data-go="healthcare"><span class="dot"></span>Healthcare</span>
+        <span class="strand" data-go="politics"><span class="dot"></span>Politics</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Latest writing teaser -->
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="kicker">From the desk</span>
+          <h2>Latest writing</h2>
+        </div>
+        <span class="link-more" data-nav="writing">All essays
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+
+      <article class="feature" id="featureArticle" data-open="post" data-idx="0">
+        <div class="body">
+          <div class="meta"><span class="tag f-cat">Healthcare</span><span class="f-meta">12 min · May 2026</span></div>
+          <h3 class="f-title">Financing primary care after the donors leave</h3>
+          <p class="excerpt f-excerpt">The post-donor transition is treated as a budgeting exercise.</p>
+          <span class="read">Read essay
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+        <div class="vis"><span class="fnum">01</span></div>
+      </article>
+
+      <div class="posts" id="homePosts"></div>
+    </div>
+  </div>
+
+  <!-- Courses teaser -->
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="kicker">Learn, for free</span>
+          <h2>Courses</h2>
+          <p>Structured, practical, and free while the library is small. Premium tracks arrive as the work deepens.</p>
+        </div>
+        <span class="link-more" data-nav="courses">All courses
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+      <div class="courses" id="homeCourses"></div>
+    </div>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="sec" style="border-top:none">
+    <div class="wrap">
+      <div class="news">
+        <div class="news-inner">
+          <span class="kicker">The dispatch</span>
+          <h2>One considered note, when there's something worth saying.</h2>
+          <p>No schedule, no filler. Just the occasional essay or course drop, sent straight to your inbox.</p>
+          <div class="signup">
+            <input type="email" placeholder="you@example.com" aria-label="Email address" />
+            <button class="btn btn-primary" id="subBtn">Subscribe</button>
+          </div>
+          <p class="signup-note" id="subNote">// Connect to Ghost, Buttondown, or Mailchimp at launch — see notes for Yonas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WRITING ============ -->
+<section class="view" id="view-writing">
+  <div class="hero" style="padding-bottom:36px">
+    <div class="wrap">
+      <div class="eyebrow"><span class="rule"></span><span class="kicker">Writing</span></div>
+      <h1 style="font-size:clamp(2.4rem,5vw,4rem)">The essays.</h1>
+      <p class="lede">Long-form thinking across four strands. Filter by what you're after.</p>
+    </div>
+  </div>
+  <div class="sec" style="border-top:none;padding-top:10px">
+    <div class="wrap">
+      <div class="filters" id="filters">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="organisational">Org. Behaviour</button>
+        <button class="filter" data-filter="ai">AI</button>
+        <button class="filter" data-filter="healthcare">Healthcare</button>
+        <button class="filter" data-filter="politics">Politics</button>
+      </div>
+      <div class="posts" id="allPosts"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COURSES ============ -->
+<section class="view" id="view-courses">
+  <div class="hero" style="padding-bottom:36px">
+    <div class="wrap">
+      <div class="eyebrow"><span class="rule"></span><span class="kicker">Courses</span></div>
+      <h1 style="font-size:clamp(2.4rem,5vw,4rem)">Learn the craft.</h1>
+      <p class="lede">Practical courses built from real reform and delivery work. Free for now — premium tracks marked as they come.</p>
+    </div>
+  </div>
+  <div class="sec" style="border-top:none;padding-top:10px">
+    <div class="wrap">
+      <div class="courses" id="allCourses"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="view" id="view-about">
+  <div class="sec" style="border-top:none;padding-top:80px">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="portrait"><span class="mono">Y</span></div>
+        <div class="about-text">
+          <span class="kicker">About</span>
+          <h2>I work where systems, people, and evidence meet.</h2>
+          <p><strong>This is a placeholder bio — rewrite it in your own voice.</strong> A physician and health-systems practitioner working at the intersection of primary care reform, health financing, and the responsible use of AI in delivery.</p>
+          <p>The Den is where the thinking happens out loud: half-formed arguments, finished essays, and the courses I wish had existed when I was learning this work. Everything here starts from the same question — <em>how do you get a complex system to actually do the thing it claims to do?</em></p>
+          <p>Writing here is independent and personal; it doesn't represent any employer or institution.</p>
+          <div class="creds">
+            <span class="cred">Health Systems</span>
+            <span class="cred">PHC Reform</span>
+            <span class="cred">AI in Delivery</span>
+            <span class="cred">Org. Behaviour</span>
+            <span class="cred">Health Financing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ READER (opens on card click) ============ -->
+<div class="reader" id="reader">
+  <div class="reader-bar">
+    <span class="back" id="readerBack">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Back
+    </span>
+    <span class="kicker" id="readerKind"></span>
+  </div>
+  <div class="reader-wrap" id="readerWrap"></div>
+</div>
+
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="name">Yonas<b>.</b></div>
+        <p>A den for thinking out loud about systems, people, and the work of getting things to function.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h5>Explore</h5>
+          <a data-nav="writing">Writing</a>
+          <a data-nav="courses">Courses</a>
+          <a data-nav="about">About</a>
+        </div>
+        <div class="foot-col">
+          <h5>Strands</h5>
+          <a data-go="organisational">Org. Behaviour</a>
+          <a data-go="ai">AI</a>
+          <a data-go="healthcare">Healthcare</a>
+          <a data-go="politics">Politics</a>
+        </div>
+        <div class="foot-col">
+          <h5>Elsewhere</h5>
+          <a href="#">LinkedIn</a>
+          <a href="#">X / Twitter</a>
+          <a href="#">Email</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Yonas · The Den</span>
+      <span>Built to be owned, not rented.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script>
+
+/* ============ DATA (seed defaults; content.json from the CMS overrides these) ============ */
+const CAT_LABEL = {organisational:"Org. Behaviour", ai:"AI", healthcare:"Healthcare", politics:"Politics"};
+
+const POSTS = [
+  {title:"Financing primary care after the donors leave", category:"healthcare", excerpt:"The post-donor transition is treated as a budgeting exercise. It is really a question about who holds the risk when the external money stops.", body:"The post-donor transition is treated as a budgeting exercise. It is really a question about who holds the risk when the external money stops — and most systems have never asked it out loud.\n\nThis is sample content. Log in at /admin to replace it with the full essay.", date:"2026-05-01", readTime:"12 min"},
+  {title:"The quiet cost of heroic managers", category:"organisational", excerpt:"Every team has the person who absorbs the chaos. The trouble is that their heroism is also why the chaos never gets fixed.", body:"", date:"2026-04-20", readTime:"8 min"},
+  {title:"Models don't have judgment. Systems do.", category:"ai", excerpt:"The interesting question was never whether the model is accurate. It's what the clinic does with a number it half-trusts at 2am.", body:"", date:"2026-04-10", readTime:"10 min"},
+  {title:"The continuum of care is a promise, not a diagram", category:"healthcare", excerpt:"We draw it as a clean line from pregnancy to old age. Patients experience it as a series of cliffs.", body:"", date:"2026-03-22", readTime:"9 min"},
+  {title:"Reform as a coalition problem", category:"politics", excerpt:"Good policy fails when it's treated as a design problem instead of what it actually is: a question of who you can keep on side.", body:"", date:"2026-03-08", readTime:"11 min"},
+  {title:"Why reorganisations fail before they begin", category:"organisational", excerpt:"By the time the new org chart is announced, the real decisions have already happened in the corridor.", body:"", date:"2026-02-18", readTime:"7 min"},
+  {title:"What a clinic actually wants from an algorithm", category:"ai", excerpt:"Not accuracy. Not explainability. It wants to not be blamed when it follows the recommendation and the patient still dies.", body:"", date:"2026-02-05", readTime:"9 min"},
+  {title:"Who pays for the health system we say we want", category:"healthcare", excerpt:"Universal coverage is a budget line that nobody wants to own. Until that changes, the rest is rhetoric.", body:"", date:"2026-01-20", readTime:"12 min"}
+];
+
+const COURSES = [
+  {title:"Foundations of Primary Health Care Reform", category:"Healthcare", description:"What reform actually requires — financing, workforce, and the politics of change.", status:"free", duration:"~4 hrs", lessons:["What PHC reform actually means","Financing: where the money comes from","The workforce question","Service delivery models","Measuring what matters","Sustaining change after the launch"]},
+  {title:"Reading Health Data Without Fooling Yourself", category:"AI · Data", description:"A working clinician's guide to triangulation, denominators, and the traps that make bad numbers look authoritative.", status:"free", duration:"~3 hrs", lessons:["Why the denominator is everything","Triangulating three bad sources","Spotting survivorship and selection traps","When a confident dashboard is lying","Presenting uncertainty honestly"]},
+  {title:"Organisational Behaviour for Health Leaders", category:"Org. Behaviour", description:"Why teams stall, how incentives really move people, and what to do the Monday after the strategy offsite.", status:"free", duration:"~5 hrs", lessons:["Why good strategies die in implementation","Incentives vs intentions","The corridor where decisions really happen","Managing without heroics","Designing for the team you have"]},
+  {title:"Designing an Investment Case", category:"Health Financing", description:"From epidemiological evidence to a defensible benefit–cost ratio. The full method, end to end.", status:"soon", duration:"", lessons:[]}
+];
+
+/* ============ HELPERS ============ */
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function fmtDate(d){ if(!d) return ""; const dt=new Date(d); return isNaN(dt)?esc(d):dt.toLocaleDateString("en-GB",{month:"short",year:"numeric"}); }
+function postMeta(p){ return [p.readTime, fmtDate(p.date)].filter(Boolean).join(" · "); }
+function plain(md){ return String(md||"").replace(/[#*_>`~\[\]()]/g," ").replace(/\s+/g," ").trim(); }
+function excerptOf(p){ if(p.excerpt) return p.excerpt; const t=plain(p.body); return t.length>150? t.slice(0,150).trim()+"…": t; }
+function mdHtml(md){ if(!md) return ""; if(window.marked && marked.parse) return marked.parse(md); return md.split(/\n\n+/).map(par=>"<p>"+esc(par)+"</p>").join(""); }
+function baseName(path){ return String(path||"").split("/").pop(); }
+function courseMeta(c){ if(c.status==="soon") return ["Premium","Coming soon"]; const m=[]; if(c.lessons&&c.lessons.length) m.push(c.lessons.length+" lessons"); if(c.duration) m.push(c.duration); return m.length?m:["Free"]; }
+
+/* ============ RENDER ============ */
+function postCard(p,i){
+  return `<div class="post" data-cat="${esc(p.category)}" data-open="post" data-idx="${i}">
+    <span class="kicker">${esc(CAT_LABEL[p.category]||p.category)}</span>
+    <h4>${esc(p.title)}</h4>
+    <p class="excerpt">${esc(excerptOf(p))}</p>
+    <div class="foot">${esc(postMeta(p))}</div>
+  </div>`;
+}
+function courseCard(c,i){
+  const badge = c.status==="free" ? `<span class="badge free">Free</span>` : `<span class="badge soon">Premium · soon</span>`;
+  const cta = c.status==="free" ? `<button class="cta">Open course</button>` : `<button class="cta locked" disabled>Notify me</button>`;
+  return `<div class="course c${(i%4)+1}" data-open="course" data-idx="${i}">
+    <div class="top">${badge}</div>
+    <div class="info">
+      <span class="ctag">${esc(c.category)}</span>
+      <h4>${esc(c.title)}</h4>
+      <p class="desc">${esc(c.description)}</p>
+      <div class="cmeta">${courseMeta(c).map(m=>`<span>${esc(m)}</span>`).join("")}</div>
+      ${cta}
+    </div>
+  </div>`;
+}
+function renderFeature(){
+  const f=document.getElementById("featureArticle"); if(!f) return;
+  const p=POSTS[0]; if(!p){ f.style.display="none"; return; }
+  f.style.display="";
+  f.querySelector(".f-cat").textContent = CAT_LABEL[p.category]||p.category;
+  f.querySelector(".f-meta").textContent = postMeta(p);
+  f.querySelector(".f-title").textContent = p.title;
+  f.querySelector(".f-excerpt").textContent = excerptOf(p);
+}
+function renderAll(){
+  renderFeature();
+  document.getElementById("homePosts").innerHTML = POSTS.slice(1,5).map((p,i)=>postCard(p,i+1)).join("");
+  document.getElementById("allPosts").innerHTML  = POSTS.map((p,i)=>postCard(p,i)).join("");
+  document.getElementById("homeCourses").innerHTML = COURSES.map((c,i)=>courseCard(c,i)).join("");
+  document.getElementById("allCourses").innerHTML  = COURSES.map((c,i)=>courseCard(c,i)).join("");
+}
+function renderFilters(){
+  const cats=[["all","All"],["organisational","Org. Behaviour"],["ai","AI"],["healthcare","Healthcare"],["politics","Politics"]];
+  document.getElementById("filters").innerHTML = cats.map((c,i)=>`<button class="filter ${i===0?'active':''}" data-filter="${c[0]}">${c[1]}</button>`).join("");
+}
+renderFilters(); renderAll();
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* Load CMS-managed content.json (overrides the seed defaults above) */
+fetch("./content.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(data=>{
+  if(!data) return;
+  if(Array.isArray(data.posts)){ POSTS.length=0; data.posts.forEach(p=>POSTS.push(p)); }
+  if(Array.isArray(data.courses)){ COURSES.length=0; data.courses.forEach(c=>COURSES.push(c)); }
+  renderAll();
+}).catch(()=>{});
+
+/* ============ NAVIGATION ============ */
+function go(view){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.getElementById("view-"+view).classList.add("active");
+  document.querySelectorAll("nav.primary a").forEach(a=>a.classList.toggle("active",a.dataset.nav===view));
+  document.getElementById("nav").classList.remove("open");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.addEventListener("click",e=>{
+  const open=e.target.closest("[data-open]");
+  if(open){ openReader(open.dataset.open, parseInt(open.dataset.idx)||0); return; }
+  const nav=e.target.closest("[data-nav]");
+  if(nav){ go(nav.dataset.nav); return; }
+  const strand=e.target.closest("[data-go]");
+  if(strand){ go("writing"); applyFilter(strand.dataset.go); return; }
+});
+
+/* ============ FILTERS ============ */
+function applyFilter(cat){
+  document.querySelectorAll("#filters .filter").forEach(f=>f.classList.toggle("active",f.dataset.filter===cat));
+  document.querySelectorAll("#allPosts .post").forEach(p=>{ p.style.display=(cat==="all"||p.dataset.cat===cat)?"flex":"none"; });
+}
+document.getElementById("filters").addEventListener("click",e=>{ const f=e.target.closest(".filter"); if(f) applyFilter(f.dataset.filter); });
+
+/* ============ READER ============ */
+const reader=document.getElementById("reader");
+function openReader(kind, idx){
+  const wrap=document.getElementById("readerWrap"), label=document.getElementById("readerKind");
+  if(kind==="post"){
+    const p=POSTS[idx]; if(!p) return;
+    label.textContent="Essay";
+    const body = p.body ? mdHtml(p.body) : `<p>${esc(excerptOf(p))}</p><div class="sample-note">Full essay coming — add it from the admin editor.</div>`;
+    wrap.innerHTML = `
+      <span class="kicker">${esc(CAT_LABEL[p.category]||p.category)}</span>
+      <h1>${esc(p.title)}</h1>
+      <div class="rmeta">${postMeta(p).split("·").map(s=>`<span>${esc(s.trim())}</span>`).join("")}</div>
+      ${p.cover?`<img class="rcover" src="${esc(p.cover)}" alt="">`:""}
+      <div class="rbody">${body}</div>
+      ${p.attachment?`<a class="rfile" href="${esc(p.attachment)}" download>⬇ ${esc(baseName(p.attachment))}</a>`:""}`;
+  } else {
+    const c=COURSES[idx]; if(!c) return;
+    label.textContent="Course";
+    const lessons=(c.lessons&&c.lessons.length)
+      ? `<div class="lessons">${c.lessons.map((l,i)=>`<div class="lesson"><span class="ln">${String(i+1).padStart(2,"0")}</span><span class="lt">${esc(l)}</span></div>`).join("")}</div>`
+      : (c.status==="soon"?`<div class="sample-note">Premium course — lessons publish soon.</div>`:`<div class="sample-note">No lessons yet.</div>`);
+    wrap.innerHTML = `
+      <span class="kicker">${esc(c.category)}</span>
+      <h1>${esc(c.title)}</h1>
+      <div class="rmeta">${courseMeta(c).map(m=>`<span>${esc(m)}</span>`).join("")}</div>
+      ${c.cover?`<img class="rcover" src="${esc(c.cover)}" alt="">`:""}
+      <div class="rbody"><p>${esc(c.description)}</p></div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:500;font-size:1.4rem;margin:40px 0 6px;letter-spacing:-.01em">Lessons</h3>
+      ${lessons}
+      ${c.attachment?`<a class="rfile" href="${esc(c.attachment)}" download>⬇ ${esc(baseName(c.attachment))}</a>`:""}`;
+  }
+  if(!reader.classList.contains("open")) history.pushState({reader:1},"");
+  reader.classList.add("open"); reader.scrollTop=0; document.body.style.overflow="hidden";
+  document.getElementById("readerBack").focus();
+}
+function closeReader(){ reader.classList.remove("open"); document.body.style.overflow=""; }
+document.getElementById("readerBack").addEventListener("click",()=>{ if(reader.classList.contains("open")) history.back(); });
+window.addEventListener("popstate",()=>{ if(reader.classList.contains("open")) closeReader(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && reader.classList.contains("open")) history.back(); });
+
+/* ============ THEME ============ */
+const root=document.documentElement;
+if(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) root.setAttribute("data-theme","dark");
+document.getElementById("themeBtn").addEventListener("click",()=>{ root.setAttribute("data-theme", root.getAttribute("data-theme")==="dark"?"light":"dark"); });
+
+/* ============ MOBILE NAV ============ */
+document.getElementById("burger").addEventListener("click",()=>{ document.getElementById("nav").classList.toggle("open"); });
+
+/* ============ NETLIFY IDENTITY (handles invite link + redirects to /admin after login) ============ */
+if(window.netlifyIdentity){
+  window.netlifyIdentity.on("init", user=>{
+    if(!user){ window.netlifyIdentity.on("login", ()=>{ document.location.href="/admin/"; }); }
+  });
+}
+
+</script>
+</body>
+</html>

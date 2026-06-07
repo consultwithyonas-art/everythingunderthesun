@@ -1,0 +1,121 @@
+{
+  "posts": [
+    {
+      "title": "Financing primary care after the donors leave",
+      "category": "healthcare",
+      "excerpt": "The post-donor transition is treated as a budgeting exercise. It is really a question about who holds the risk when the external money stops.",
+      "body": "The post-donor transition is treated as a budgeting exercise. It is really a question about who holds the risk when the external money stops — and most systems have never asked it out loud.\n\nThis is sample content. Log in at /admin to replace it with the full essay.",
+      "date": "2026-05-01",
+      "readTime": "12 min"
+    },
+    {
+      "title": "The quiet cost of heroic managers",
+      "category": "organisational",
+      "excerpt": "Every team has the person who absorbs the chaos. The trouble is that their heroism is also why the chaos never gets fixed.",
+      "body": "",
+      "date": "2026-04-20",
+      "readTime": "8 min"
+    },
+    {
+      "title": "Models don't have judgment. Systems do.",
+      "category": "ai",
+      "excerpt": "The interesting question was never whether the model is accurate. It's what the clinic does with a number it half-trusts at 2am.",
+      "body": "",
+      "date": "2026-04-10",
+      "readTime": "10 min"
+    },
+    {
+      "title": "The continuum of care is a promise, not a diagram",
+      "category": "healthcare",
+      "excerpt": "We draw it as a clean line from pregnancy to old age. Patients experience it as a series of cliffs.",
+      "body": "",
+      "date": "2026-03-22",
+      "readTime": "9 min"
+    },
+    {
+      "title": "Reform as a coalition problem",
+      "category": "politics",
+      "excerpt": "Good policy fails when it's treated as a design problem instead of what it actually is: a question of who you can keep on side.",
+      "body": "",
+      "date": "2026-03-08",
+      "readTime": "11 min"
+    },
+    {
+      "title": "Why reorganisations fail before they begin",
+      "category": "organisational",
+      "excerpt": "By the time the new org chart is announced, the real decisions have already happened in the corridor.",
+      "body": "",
+      "date": "2026-02-18",
+      "readTime": "7 min"
+    },
+    {
+      "title": "What a clinic actually wants from an algorithm",
+      "category": "ai",
+      "excerpt": "Not accuracy. Not explainability. It wants to not be blamed when it follows the recommendation and the patient still dies.",
+      "body": "",
+      "date": "2026-02-05",
+      "readTime": "9 min"
+    },
+    {
+      "title": "Who pays for the health system we say we want",
+      "category": "healthcare",
+      "excerpt": "Universal coverage is a budget line that nobody wants to own. Until that changes, the rest is rhetoric.",
+      "body": "",
+      "date": "2026-01-20",
+      "readTime": "12 min"
+    }
+  ],
+  "courses": [
+    {
+      "title": "Foundations of Primary Health Care Reform",
+      "category": "Healthcare",
+      "description": "What reform actually requires — financing, workforce, and the politics of change.",
+      "status": "free",
+      "duration": "~4 hrs",
+      "lessons": [
+        "What PHC reform actually means",
+        "Financing: where the money comes from",
+        "The workforce question",
+        "Service delivery models",
+        "Measuring what matters",
+        "Sustaining change after the launch"
+      ]
+    },
+    {
+      "title": "Reading Health Data Without Fooling Yourself",
+      "category": "AI · Data",
+      "description": "A working clinician's guide to triangulation, denominators, and the traps that make bad numbers look authoritative.",
+      "status": "free",
+      "duration": "~3 hrs",
+      "lessons": [
+        "Why the denominator is everything",
+        "Triangulating three bad sources",
+        "Spotting survivorship and selection traps",
+        "When a confident dashboard is lying",
+        "Presenting uncertainty honestly"
+      ]
+    },
+    {
+      "title": "Organisational Behaviour for Health Leaders",
+      "category": "Org. Behaviour",
+      "description": "Why teams stall, how incentives really move people, and what to do the Monday after the strategy offsite.",
+      "status": "free",
+      "duration": "~5 hrs",
+      "lessons": [
+        "Why good strategies die in implementation",
+        "Incentives vs intentions",
+        "The corridor where decisions really happen",
+        "Managing without heroics",
+        "Designing for the team you have"
+      ]
+    },
+    {
+      "title": "Designing an Investment Case",
+      "category": "Health Financing",
+      "description": "From epidemiological evidence to a defensible benefit–cost ratio. The full method, end to end.",
+      "status": "soon",
+      "duration": "",
+      "lessons": []
+    }
+  ]
+}
